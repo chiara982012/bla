@@ -1,32 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Quiz Dinamico</title>
-  <script>
-    async function caricaDomanda() {
-      const url = "https://script.google.com/macros/s/AKfycbzW5q_1oro02_elscjkJYv3mlQRrUvmjVctxK1IJynt/dev"; // Sostituisci con l'URL del tuo script Apps Script
-      const response = await fetch(url);
-      const data = await response.json();
-
-      // Inserisci i dati nel DOM
-      document.getElementById("domanda").textContent = data.domanda;
-      const opzioni = document.getElementById("opzioni");
-      data.opzioni.forEach(opzione => {
-        const button = document.createElement("button");
-        button.textContent = opzione;
-        button.onclick = () => {
-          alert(opzione === data.rispostaCorretta ? "Risposta corretta!" : "Risposta sbagliata!");
-        };
-        opzioni.appendChild(button);
-      });
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Interattivo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 10px;
     }
 
-    window.onload = caricaDomanda;
-  </script>
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .quiz-container {
+      margin: 20px 0;
+    }
+
+    .question-box {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .options {
+      list-style: none;
+      padding: 0;
+    }
+
+    .options li {
+      background-color: #f0f0f0;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .options li:hover {
+      background-color: #ddd;
+    }
+
+  </style>
 </head>
 <body>
-  <h1>Quiz</h1>
-  <p id="domanda"></p>
-  <div id="opzioni"></div>
-</body>
-</html>
+  <h1>Quiz Interattivo</h1>
+  <div id="quiz-container" class="quiz-container"></div>
+
+  <script>
+    // URL del tuo script Apps Script deployato (sostituisci con il tuo URL)
+    const apiUrl = "https://script.google.com/macros/s/AKfycbzdSlmRQcdrPeyRRp5PMdpe-In4BSKwHm2pywg2aH6jCMhyeADLz6u2iQKpauA1yp853w/exec";
+
+    // Funzione per ottenere domande e visualizzarle
+    async function fetchQuestions() {
+      try {
+        const response = await fetch(apiUrl);
+        const questions = await 
