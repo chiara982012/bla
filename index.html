@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Dinamico</title>
+  <script>
+    async function caricaDomanda() {
+      const url = "https://script.google.com/macros/s/AKfycbzW5q_1oro02_elscjkJYv3mlQRrUvmjVctxK1IJynt/dev"; // Sostituisci con l'URL del tuo script Apps Script
+      const response = await fetch(url);
+      const data = await response.json();
+
+      // Inserisci i dati nel DOM
+      document.getElementById("domanda").textContent = data.domanda;
+      const opzioni = document.getElementById("opzioni");
+      data.opzioni.forEach(opzione => {
+        const button = document.createElement("button");
+        button.textContent = opzione;
+        button.onclick = () => {
+          alert(opzione === data.rispostaCorretta ? "Risposta corretta!" : "Risposta sbagliata!");
+        };
+        opzioni.appendChild(button);
+      });
+    }
+
+    window.onload = caricaDomanda;
+  </script>
+</head>
+<body>
+  <h1>Quiz</h1>
+  <p id="domanda"></p>
+  <div id="opzioni"></div>
+</body>
+</html>
